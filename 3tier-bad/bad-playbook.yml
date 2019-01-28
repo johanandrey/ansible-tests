@@ -13,13 +13,6 @@
 #   Bare variables
 #   No use of handlers
 
-- name: Full automation center
-  hosts: all
-  become: true
-
-  roles:
-        
-
 - name: configuration
   hosts: all
   gather_facts: false # remove later! speeds up testing
