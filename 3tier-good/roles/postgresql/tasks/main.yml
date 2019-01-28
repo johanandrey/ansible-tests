@@ -1,0 +1,19 @@
+---
+# tasks file for postgresql
+
+- name: Install progress
+  yum:
+    name: postgresql-server-{{ pg_version }}
+    state: present
+  notify: 
+  - enable postgres at boot
+  - restart postgres
+  
+- name: Check if postgres is running
+  stat:
+    path: /var/lib/pgsql/data/postmaster.opts
+  register: pg_status
+
+- name: Initdb on Postgresql (new database)
+  command: postgresql-setup initdb
+  when: pg_status.stat.islnk is defined

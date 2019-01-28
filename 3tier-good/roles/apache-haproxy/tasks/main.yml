@@ -1,0 +1,31 @@
+---
+# tasks file for apache-haproxy
+
+- name: Install and setup HTTP package
+  block:
+  - name: Install HTTP
+    yum:
+        name: http
+        state: latest
+    notify: Restart apache
+
+  - name: Enable apache at boot
+    service:
+        name: httpd
+        enabled: yes
+  when: target == "all" or target == "apache"
+
+- name: Install HAProxy
+  yum:
+    name: haproxy
+    state: latest
+  when: target == "all"
+  
+- name: Configure HAproxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+  notify: Restart haproxy
+  when: target == "all"
+
+  

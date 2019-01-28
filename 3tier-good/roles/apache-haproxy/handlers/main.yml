@@ -1,0 +1,12 @@
+---
+# handlers file for apache-haproxy
+
+- name: restart HAproxy
+  service:
+    name: haproxy
+    state: restarted
+
+- name: Restart apache
+  service:
+    name: http
+    state: restarted

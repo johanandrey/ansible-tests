@@ -1,0 +1,59 @@
+---
+# Playbook that creates the 3tier-app infrastructure and config
+# @author: Johan Barón
+# @email: johanandrey.baron@gmail.com
+# Use: ansible-playbook main-automation.yml
+
+- name: Setup the 3tier-app - Repos
+  hosts: all
+  gather_facts: false
+  become: true
+
+  roles:
+  - repo-open-three
+
+- name: Setup the 3tier-app - front
+  hosts: frontends
+  gather_facts: false
+  become: true
+
+  roles:
+  - apache-haproxy
+
+
+- name: Setup the 3tier-app - apps - tomcat I and ApacheHTTP
+  hosts: apps
+  gather_facts: false
+  become: true
+
+  roles:
+  - tomcat-install
+  - role: apache-haproxy
+    vars:
+      target: apache
+  
+- name: Setup the 3tier-app - app1 - tomcat II 
+  hosts: app1
+  gather_facts: false
+  become: true
+
+  roles:
+  - tomcat-file-i
+
+
+- name: Setup the 3tier-app - app2 - tomcat II 
+  hosts: app2
+  gather_facts: false
+  become: true
+
+  roles:
+  - tomcat-file-ii
+
+
+- name: Setup the 3tier-app - appdbs
+  hosts: appdbs
+  gather_facts: false
+  become: true
+
+  roles:
+  - postgresql
