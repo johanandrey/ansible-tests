@@ -9,6 +9,9 @@
   gather_facts: false
   become: true
 
+  vars:
+    GUID: ec80
+
   roles:
   - repo-open-three
 
