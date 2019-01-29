@@ -2,7 +2,7 @@
 # tasks file for repo-open-three
 
 - name: enable repos
-  file:
+  template:
     src: open_three-tier-app.repo
     dest: /etc/yum.repos.d/open_three-tier-app.repo
     mode: 0644
